@@ -121,8 +121,9 @@ body {
 
 #slideshow-content {
 	position: absolute;
-	border: 8px solid rgba(#fff, 0.8);
+	border: 8px solid rgba(#fff, 0.9);
 	@include opacity(0);
+	@include border-radius(2px);
 	@include box-shadow(0 0 10px rgba(#000, 0.75));
 	.hidden {
 		display: block;

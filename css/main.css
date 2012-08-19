@@ -178,25 +178,30 @@ body {
 /* line 122, ../sass/main.scss */
 #slideshow-content {
   position: absolute;
-  border: 8px solid rgba(255, 255, 255, 0.8);
+  border: 8px solid rgba(255, 255, 255, 0.9);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 }
-/* line 127, ../sass/main.scss */
+/* line 128, ../sass/main.scss */
 #slideshow-content .hidden {
   display: block;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
-/* line 131, ../sass/main.scss */
+/* line 132, ../sass/main.scss */
 #slideshow-content img {
   position: relative;
   max-width: 100%;
 }
-/* line 135, ../sass/main.scss */
+/* line 136, ../sass/main.scss */
 #slideshow-content.faded {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -206,7 +211,7 @@ body {
   -o-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
 }
-/* line 139, ../sass/main.scss */
+/* line 140, ../sass/main.scss */
 #slideshow-content .title {
   position: absolute;
   bottom: 0;
