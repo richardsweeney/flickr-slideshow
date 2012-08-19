@@ -19,11 +19,20 @@ body {
 	max-width: 1000px;
 	min-width: 320px;
 	margin: 50px auto 300px;
+	padding-bottom: 70px;
 	display: block;
 	text-align: center;
+	@include opacity(0);
+	@include transition(opacity 0.75s ease-in-out);
+	&.visible-search {
+		@include opacity(1);
+		@include transition(padding 0.5s ease-in-out);
+	}
 	&.loading {
 		background: url(../img/loader.gif) bottom center no-repeat;
-		padding-bottom: 70px;
+	}
+	p {
+		font-size: 20px;
 	}
 }
 
@@ -43,11 +52,12 @@ body {
 	font-family: $sans;
 	font-size: 20px;
 	height: 40px;
-	margin: 0;
+	margin:  0 5px;
 	@include border-radius(2px);
 }
 
 #flickr-input {
+	margin-bottom: 10px;
 }
 
 #flickr-submit, #create-gallery-button {
@@ -60,9 +70,13 @@ body {
 	}
 }
 
+.no-results {
+	font-size: 24px;
+}
+
 .flickr-image-list, .flickr-image-gallery {
 	list-style: none;
-	padding: 20px 0 0 30px;
+	padding: 10px 0 0 30px;
 	margin-left: 0;
 	li {
 		border: 4px solid #fff;
@@ -82,6 +96,7 @@ body {
 	}
 }
 
+
 #hidden-image-container {
 	display: none;
 }
@@ -89,6 +104,7 @@ body {
 	@include opacity(0);
 	@include transition(opacity 0.5s ease-in-out);
 }
+
 
 #slideshow-container {
 	position: absolute;
@@ -98,13 +114,20 @@ body {
 	right: 0;
 	width: 100%;
 	background: rgba(#000, 0.6);
+	&.loading {
+		background: rgba(#000, 0.6) url(../img/white-loader.gif) center 300px no-repeat;
+	}
 }
 
 #slideshow-content {
 	position: absolute;
-	border: 10px solid #fff;
+	border: 8px solid rgba(#fff, 0.8);
 	@include opacity(0);
 	@include box-shadow(0 0 10px rgba(#000, 0.75));
+	.hidden {
+		display: block;
+		@include opacity (1);
+	}
 	img {
 		position: relative;
 		max-width: 100%;
@@ -120,7 +143,7 @@ body {
 		right: 0;
 		color: #eee;
 		text-shadow: 1px 1px 1px #000;
-		background: rgba(#000, 0.4);
+		background: rgba(#000, 0.6);
 		padding: 10px 5px;
 		font-size: 20px;
 		text-align: center;

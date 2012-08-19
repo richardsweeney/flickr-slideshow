@@ -18,26 +18,47 @@ body {
   max-width: 1000px;
   min-width: 320px;
   margin: 50px auto 300px;
+  padding-bottom: 70px;
   display: block;
   text-align: center;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.75s ease-in-out;
+  -moz-transition: opacity 0.75s ease-in-out;
+  -ms-transition: opacity 0.75s ease-in-out;
+  -o-transition: opacity 0.75s ease-in-out;
+  transition: opacity 0.75s ease-in-out;
 }
-/* line 24, ../sass/main.scss */
+/* line 27, ../sass/main.scss */
+.search-container.visible-search {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition: padding 0.5s ease-in-out;
+  -moz-transition: padding 0.5s ease-in-out;
+  -ms-transition: padding 0.5s ease-in-out;
+  -o-transition: padding 0.5s ease-in-out;
+  transition: padding 0.5s ease-in-out;
+}
+/* line 31, ../sass/main.scss */
 .search-container.loading {
   background: url(../img/loader.gif) bottom center no-repeat;
-  padding-bottom: 70px;
+}
+/* line 34, ../sass/main.scss */
+.search-container p {
+  font-size: 20px;
 }
 
-/* line 30, ../sass/main.scss */
+/* line 39, ../sass/main.scss */
 #create-gallery-button {
   color: #333;
   text-decoration: none;
 }
-/* line 33, ../sass/main.scss */
+/* line 42, ../sass/main.scss */
 #create-gallery-button.inactive {
   color: #aaa;
 }
 
-/* line 40, ../sass/main.scss */
+/* line 49, ../sass/main.scss */
 #flickr-input,
 #flickr-submit,
 #create-gallery-button {
@@ -46,7 +67,7 @@ body {
   font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
   font-size: 20px;
   height: 40px;
-  margin: 0;
+  margin: 0 5px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
@@ -54,7 +75,12 @@ body {
   border-radius: 2px;
 }
 
-/* line 53, ../sass/main.scss */
+/* line 59, ../sass/main.scss */
+#flickr-input {
+  margin-bottom: 10px;
+}
+
+/* line 63, ../sass/main.scss */
 #flickr-submit, #create-gallery-button {
   text-shadow: 1px 1px 1px #fff;
   cursor: pointer;
@@ -65,19 +91,24 @@ body {
   background: -ms-linear-gradient(#ffffff, #eeeeee);
   background: linear-gradient(#ffffff, #eeeeee);
 }
-/* line 57, ../sass/main.scss */
+/* line 67, ../sass/main.scss */
 #flickr-submit:active, #create-gallery-button:active {
   padding: 4px 10px 6px;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-/* line 63, ../sass/main.scss */
+/* line 73, ../sass/main.scss */
+.no-results {
+  font-size: 24px;
+}
+
+/* line 77, ../sass/main.scss */
 .flickr-image-list, .flickr-image-gallery {
   list-style: none;
-  padding: 20px 0 0 30px;
+  padding: 10px 0 0 30px;
   margin-left: 0;
 }
-/* line 67, ../sass/main.scss */
+/* line 81, ../sass/main.scss */
 .flickr-image-list li, .flickr-image-gallery li {
   border: 4px solid #fff;
   margin: 0 13px 13px 0;
@@ -100,25 +131,25 @@ body {
   *display: inline;
 }
 
-/* line 75, ../sass/main.scss */
+/* line 89, ../sass/main.scss */
 .flickr-image-list {
   text-align: none;
 }
-/* line 77, ../sass/main.scss */
+/* line 91, ../sass/main.scss */
 .flickr-image-list li.selected-image {
   border-color: #000;
 }
-/* line 80, ../sass/main.scss */
+/* line 94, ../sass/main.scss */
 .flickr-image-list img {
   width: 100px;
 }
 
-/* line 85, ../sass/main.scss */
+/* line 100, ../sass/main.scss */
 #hidden-image-container {
   display: none;
 }
 
-/* line 88, ../sass/main.scss */
+/* line 103, ../sass/main.scss */
 .hidden {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -129,7 +160,7 @@ body {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* line 93, ../sass/main.scss */
+/* line 109, ../sass/main.scss */
 #slideshow-container {
   position: absolute;
   top: 0;
@@ -139,23 +170,33 @@ body {
   width: 100%;
   background: rgba(0, 0, 0, 0.6);
 }
+/* line 117, ../sass/main.scss */
+#slideshow-container.loading {
+  background: rgba(0, 0, 0, 0.6) url(../img/white-loader.gif) center 300px no-repeat;
+}
 
-/* line 103, ../sass/main.scss */
+/* line 122, ../sass/main.scss */
 #slideshow-content {
   position: absolute;
-  border: 10px solid #fff;
+  border: 8px solid rgba(255, 255, 255, 0.8);
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 }
-/* line 108, ../sass/main.scss */
+/* line 127, ../sass/main.scss */
+#slideshow-content .hidden {
+  display: block;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+/* line 131, ../sass/main.scss */
 #slideshow-content img {
   position: relative;
   max-width: 100%;
 }
-/* line 112, ../sass/main.scss */
+/* line 135, ../sass/main.scss */
 #slideshow-content.faded {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -165,7 +206,7 @@ body {
   -o-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
 }
-/* line 116, ../sass/main.scss */
+/* line 139, ../sass/main.scss */
 #slideshow-content .title {
   position: absolute;
   bottom: 0;
@@ -173,7 +214,7 @@ body {
   right: 0;
   color: #eee;
   text-shadow: 1px 1px 1px #000;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
   padding: 10px 5px;
   font-size: 20px;
   text-align: center;
