@@ -1,0 +1,162 @@
+@import 'compass';
+
+$sans: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+
+body {
+	background: #fafafa;
+	font-family: $sans;
+	color: #222;
+}
+
+.flickr-input-label {
+	display: block;
+	padding-bottom: 20px;
+	font-size: 50px;
+	text-shadow: 1px 1px 1px #fff;
+}
+
+.search-container {
+	max-width: 1000px;
+	min-width: 320px;
+	margin: 50px auto 300px;
+	display: block;
+	text-align: center;
+	&.loading {
+		background: url(../img/loader.gif) bottom center no-repeat;
+		padding-bottom: 70px;
+	}
+}
+
+#create-gallery-button {
+	color: #333;
+	text-decoration: none;
+	&.inactive {
+		color: #aaa;
+	}
+}
+
+#flickr-input,
+#flickr-submit,
+#create-gallery-button {
+	padding: 5px 10px;
+	border: 1px solid rgba(#000, 0.2);
+	font-family: $sans;
+	font-size: 20px;
+	height: 40px;
+	margin: 0;
+	@include border-radius(2px);
+}
+
+#flickr-input {
+}
+
+#flickr-submit, #create-gallery-button {
+	text-shadow: 1px 1px 1px #fff;
+	cursor: pointer;
+	@include background(linear-gradient(#fff, #eee));
+	&:active {
+		padding: 4px 10px 6px;
+		border: 1px solid rgba(#000, 0.5);
+	}
+}
+
+.flickr-image-list, .flickr-image-gallery {
+	list-style: none;
+	padding: 20px 0 0 30px;
+	margin-left: 0;
+	li {
+		border: 4px solid #fff;
+		margin: 0 13px 13px 0;
+		@include transition(border-color 0.2s ease-out);
+		@include inline-block;
+		@include box-shadow(0 0 3px rgba(#000, 0.7));
+	}
+}
+.flickr-image-list {
+	text-align: none;
+	li.selected-image {
+		border-color: #000;
+	}
+	img {
+		width: 100px;
+	}
+}
+
+#hidden-image-container {
+	display: none;
+}
+.hidden {
+	@include opacity(0);
+	@include transition(opacity 0.5s ease-in-out);
+}
+
+#slideshow-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	width: 100%;
+	background: rgba(#000, 0.6);
+}
+
+#slideshow-content {
+	position: absolute;
+	border: 10px solid #fff;
+	@include opacity(0);
+	@include box-shadow(0 0 10px rgba(#000, 0.75));
+	img {
+		position: relative;
+		max-width: 100%;
+	}
+	&.faded {
+		@include opacity(1);
+		@include transition(opacity 0.5s ease-in-out);
+	}
+	.title {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		color: #eee;
+		text-shadow: 1px 1px 1px #000;
+		background: rgba(#000, 0.4);
+		padding: 10px 5px;
+		font-size: 20px;
+		text-align: center;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

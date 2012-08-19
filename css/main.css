@@ -1,0 +1,180 @@
+/* line 5, ../sass/main.scss */
+body {
+  background: #fafafa;
+  font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+  color: #222;
+}
+
+/* line 11, ../sass/main.scss */
+.flickr-input-label {
+  display: block;
+  padding-bottom: 20px;
+  font-size: 50px;
+  text-shadow: 1px 1px 1px #fff;
+}
+
+/* line 18, ../sass/main.scss */
+.search-container {
+  max-width: 1000px;
+  min-width: 320px;
+  margin: 50px auto 300px;
+  display: block;
+  text-align: center;
+}
+/* line 24, ../sass/main.scss */
+.search-container.loading {
+  background: url(../img/loader.gif) bottom center no-repeat;
+  padding-bottom: 70px;
+}
+
+/* line 30, ../sass/main.scss */
+#create-gallery-button {
+  color: #333;
+  text-decoration: none;
+}
+/* line 33, ../sass/main.scss */
+#create-gallery-button.inactive {
+  color: #aaa;
+}
+
+/* line 40, ../sass/main.scss */
+#flickr-input,
+#flickr-submit,
+#create-gallery-button {
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
+  font-size: 20px;
+  height: 40px;
+  margin: 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* line 53, ../sass/main.scss */
+#flickr-submit, #create-gallery-button {
+  text-shadow: 1px 1px 1px #fff;
+  cursor: pointer;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eeeeee));
+  background: -webkit-linear-gradient(#ffffff, #eeeeee);
+  background: -moz-linear-gradient(#ffffff, #eeeeee);
+  background: -o-linear-gradient(#ffffff, #eeeeee);
+  background: -ms-linear-gradient(#ffffff, #eeeeee);
+  background: linear-gradient(#ffffff, #eeeeee);
+}
+/* line 57, ../sass/main.scss */
+#flickr-submit:active, #create-gallery-button:active {
+  padding: 4px 10px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+/* line 63, ../sass/main.scss */
+.flickr-image-list, .flickr-image-gallery {
+  list-style: none;
+  padding: 20px 0 0 30px;
+  margin-left: 0;
+}
+/* line 67, ../sass/main.scss */
+.flickr-image-list li, .flickr-image-gallery li {
+  border: 4px solid #fff;
+  margin: 0 13px 13px 0;
+  -webkit-transition: border-color 0.2s ease-out;
+  -moz-transition: border-color 0.2s ease-out;
+  -ms-transition: border-color 0.2s ease-out;
+  -o-transition: border-color 0.2s ease-out;
+  transition: border-color 0.2s ease-out;
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+}
+/* line 7, ../../../../../../Applications/LiveReload.app/Contents/Resources/SASS.lrplugin/lib/compass/frameworks/compass/stylesheets/compass/css3/_inline-block.scss */
+.flickr-image-list li, .flickr-image-gallery li {
+  *display: inline;
+}
+
+/* line 75, ../sass/main.scss */
+.flickr-image-list {
+  text-align: none;
+}
+/* line 77, ../sass/main.scss */
+.flickr-image-list li.selected-image {
+  border-color: #000;
+}
+/* line 80, ../sass/main.scss */
+.flickr-image-list img {
+  width: 100px;
+}
+
+/* line 85, ../sass/main.scss */
+#hidden-image-container {
+  display: none;
+}
+
+/* line 88, ../sass/main.scss */
+.hidden {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* line 93, ../sass/main.scss */
+#slideshow-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* line 103, ../sass/main.scss */
+#slideshow-content {
+  position: absolute;
+  border: 10px solid #fff;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+}
+/* line 108, ../sass/main.scss */
+#slideshow-content img {
+  position: relative;
+  max-width: 100%;
+}
+/* line 112, ../sass/main.scss */
+#slideshow-content.faded {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+/* line 116, ../sass/main.scss */
+#slideshow-content .title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #eee;
+  text-shadow: 1px 1px 1px #000;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 5px;
+  font-size: 20px;
+  text-align: center;
+}
