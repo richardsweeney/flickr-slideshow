@@ -1,18 +1,10 @@
 @import 'compass';
-
 $sans: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
 
 body {
 	background: #fafafa;
 	font-family: $sans;
 	color: #222;
-}
-
-.flickr-input-label {
-	display: block;
-	padding-bottom: 20px;
-	font-size: 50px;
-	text-shadow: 1px 1px 1px #fff;
 }
 
 .search-container {
@@ -23,7 +15,7 @@ body {
 	display: block;
 	text-align: center;
 	@include opacity(0);
-	@include transition(opacity 0.75s ease-in-out);
+	@include transition(opacity 1s ease-in);
 	&.visible-search {
 		@include opacity(1);
 		@include transition(padding 0.5s ease-in-out);
@@ -36,8 +28,15 @@ body {
 	}
 }
 
-#create-gallery-button {
-	color: #333;
+.flickr-input-label {
+	display: block;
+	padding: 0 10px 20px;
+	font-size: 50px;
+	text-shadow: 1px 1px 1px #fff;
+}
+
+.button {
+	color: #222;
 	text-decoration: none;
 	&.inactive {
 		color: #aaa;
@@ -46,7 +45,7 @@ body {
 
 #flickr-input,
 #flickr-submit,
-#create-gallery-button {
+.button {
 	padding: 5px 10px;
 	border: 1px solid rgba(#000, 0.2);
 	font-family: $sans;
@@ -60,7 +59,7 @@ body {
 	margin-bottom: 10px;
 }
 
-#flickr-submit, #create-gallery-button {
+#flickr-submit, .button {
 	text-shadow: 1px 1px 1px #fff;
 	cursor: pointer;
 	@include background(linear-gradient(#fff, #eee));
@@ -74,6 +73,11 @@ body {
 	font-size: 24px;
 }
 
+.or {
+	padding: 0 10px;
+	font-size: 20px;
+}
+
 .flickr-image-list, .flickr-image-gallery {
 	list-style: none;
 	padding: 10px 0 0 30px;
@@ -81,18 +85,19 @@ body {
 	li {
 		border: 4px solid #fff;
 		margin: 0 13px 13px 0;
-		@include transition(border-color 0.2s ease-out);
 		@include inline-block;
+		@include transition(border-color 0.2s ease-out);
 		@include box-shadow(0 0 3px rgba(#000, 0.7));
 	}
 }
+
 .flickr-image-list {
 	text-align: none;
 	li.selected-image {
-		border-color: #000;
+		border-color: #111;
 	}
 	img {
-		width: 100px;
+		max-width: 100px;
 	}
 }
 
@@ -113,9 +118,9 @@ body {
 	bottom: 0;
 	right: 0;
 	width: 100%;
-	background: rgba(#000, 0.6);
+	background: rgba(#000, 0.75);
 	&.loading {
-		background: rgba(#000, 0.6) url(../img/white-loader.gif) center 300px no-repeat;
+		background: rgba(#000, 0.75) url(../img/white-loader.gif) center 300px no-repeat;
 	}
 }
 
@@ -152,6 +157,29 @@ body {
 }
 
 
+@media screen and (max-width: 500px) {
+
+	.flickr-input-label {
+		font-size: 40px;
+	}
+
+	#flickr-submit {
+		margin-top: 10px;
+	}
+
+	.flickr-image-list img {
+		max-width: 80px;
+	}
+
+	.search-container p {
+		font-size: 18px;
+	}
+
+	.instructions {
+		padding: 0 20px;
+	}
+
+}
 
 
 
