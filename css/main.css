@@ -119,13 +119,13 @@ body {
 /* line 86, ../sass/main.scss */
 .flickr-image-list, .flickr-image-gallery {
   list-style: none;
-  padding: 10px 0 0 30px;
+  padding: 10px 0 0;
   margin-left: 0;
 }
 /* line 90, ../sass/main.scss */
 .flickr-image-list li, .flickr-image-gallery li {
   border: 4px solid #fff;
-  margin: 0 13px 13px 0;
+  margin: 0 15px 15px 0;
   display: -moz-inline-box;
   -moz-box-orient: vertical;
   display: inline-block;
