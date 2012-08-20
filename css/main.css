@@ -1,6 +1,6 @@
 /* line 4, ../sass/main.scss */
 body {
-  background: #fafafa;
+  background: #f5f6f7;
   font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;
   color: #222;
 }
@@ -79,8 +79,16 @@ body {
 #flickr-input {
   margin-bottom: 10px;
 }
+/* line 60, ../sass/main.scss */
+#flickr-input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
 
-/* line 62, ../sass/main.scss */
+/* line 67, ../sass/main.scss */
 #flickr-submit, .button {
   text-shadow: 1px 1px 1px #fff;
   cursor: pointer;
@@ -91,30 +99,30 @@ body {
   background: -ms-linear-gradient(#ffffff, #eeeeee);
   background: linear-gradient(#ffffff, #eeeeee);
 }
-/* line 66, ../sass/main.scss */
+/* line 71, ../sass/main.scss */
 #flickr-submit:active, .button:active {
   padding: 4px 10px 6px;
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-/* line 72, ../sass/main.scss */
+/* line 77, ../sass/main.scss */
 .no-results {
   font-size: 24px;
 }
 
-/* line 76, ../sass/main.scss */
+/* line 81, ../sass/main.scss */
 .or {
   padding: 0 10px;
   font-size: 20px;
 }
 
-/* line 81, ../sass/main.scss */
+/* line 86, ../sass/main.scss */
 .flickr-image-list, .flickr-image-gallery {
   list-style: none;
   padding: 10px 0 0 30px;
   margin-left: 0;
 }
-/* line 85, ../sass/main.scss */
+/* line 90, ../sass/main.scss */
 .flickr-image-list li, .flickr-image-gallery li {
   border: 4px solid #fff;
   margin: 0 13px 13px 0;
@@ -137,25 +145,25 @@ body {
   *display: inline;
 }
 
-/* line 94, ../sass/main.scss */
+/* line 99, ../sass/main.scss */
 .flickr-image-list {
   text-align: none;
 }
-/* line 96, ../sass/main.scss */
+/* line 101, ../sass/main.scss */
 .flickr-image-list li.selected-image {
   border-color: #111;
 }
-/* line 99, ../sass/main.scss */
+/* line 104, ../sass/main.scss */
 .flickr-image-list img {
   max-width: 100px;
 }
 
-/* line 105, ../sass/main.scss */
+/* line 110, ../sass/main.scss */
 #hidden-image-container {
   display: none;
 }
 
-/* line 108, ../sass/main.scss */
+/* line 113, ../sass/main.scss */
 .hidden {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
@@ -166,7 +174,7 @@ body {
   transition: opacity 0.5s ease-in-out;
 }
 
-/* line 114, ../sass/main.scss */
+/* line 119, ../sass/main.scss */
 #slideshow-container {
   position: absolute;
   top: 0;
@@ -176,12 +184,12 @@ body {
   width: 100%;
   background: rgba(0, 0, 0, 0.75);
 }
-/* line 122, ../sass/main.scss */
+/* line 127, ../sass/main.scss */
 #slideshow-container.loading {
   background: rgba(0, 0, 0, 0.75) url(../img/white-loader.gif) center 300px no-repeat;
 }
 
-/* line 127, ../sass/main.scss */
+/* line 132, ../sass/main.scss */
 #slideshow-content {
   position: absolute;
   border: 8px solid rgba(255, 255, 255, 0.9);
@@ -196,18 +204,18 @@ body {
   -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 }
-/* line 133, ../sass/main.scss */
+/* line 138, ../sass/main.scss */
 #slideshow-content .hidden {
   display: block;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
-/* line 137, ../sass/main.scss */
+/* line 142, ../sass/main.scss */
 #slideshow-content img {
   position: relative;
   max-width: 100%;
 }
-/* line 141, ../sass/main.scss */
+/* line 146, ../sass/main.scss */
 #slideshow-content.faded {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
@@ -217,7 +225,7 @@ body {
   -o-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
 }
-/* line 145, ../sass/main.scss */
+/* line 150, ../sass/main.scss */
 #slideshow-content .title {
   position: absolute;
   bottom: 0;
@@ -232,27 +240,27 @@ body {
 }
 
 @media screen and (max-width: 500px) {
-  /* line 162, ../sass/main.scss */
+  /* line 167, ../sass/main.scss */
   .flickr-input-label {
     font-size: 40px;
   }
 
-  /* line 166, ../sass/main.scss */
+  /* line 171, ../sass/main.scss */
   #flickr-submit {
     margin-top: 10px;
   }
 
-  /* line 170, ../sass/main.scss */
+  /* line 175, ../sass/main.scss */
   .flickr-image-list img {
     max-width: 80px;
   }
 
-  /* line 174, ../sass/main.scss */
+  /* line 179, ../sass/main.scss */
   .search-container p {
     font-size: 18px;
   }
 
-  /* line 178, ../sass/main.scss */
+  /* line 183, ../sass/main.scss */
   .instructions {
     padding: 0 20px;
   }
