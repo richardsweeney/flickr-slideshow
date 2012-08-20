@@ -48,6 +48,16 @@ var flickr = {
 	},
 
 	/**
+	 * Check if an element exists in the DOM
+	 * & remove it if it does
+	 */
+	remove: function(element) {
+		if (typeof(element) != 'undefined' && element != null) {
+			element.parentNode.removeChild(element);
+		}
+	},
+
+	/**
    * Center the opening screen, hide + show search div
    */
 	centerContent: function() {
@@ -68,8 +78,12 @@ var flickr = {
 	sortSearch: function() {
 		var input = document.getElementById('flickr-input');
 		flickr.tags = input.value;
-		if(flickr.tags === '') {
-			alert('Please add a search term!');
+		if (flickr.tags === '') {
+			var searchContainer = document.getElementsByClassName('search-container')[0],
+					p = document.createElement('p');
+			p.id = 'empty-search';
+			p.innerHTML = 'Please add a search term!';
+			searchContainer.appendChild(p);
 			input.focus();
 		} else {
 			flickr.getResults();
@@ -84,6 +98,7 @@ var flickr = {
 		var that = this,
 				searchContainer = document.getElementsByClassName('search-container')[0],
 				resultsContainer =  document.getElementById('results-container'),
+				emptyPara = document.getElementById('empty-search'),
 				url = that.settings.url + 'api_key=' + that.settings.key + '&method=flickr.photos.search&tags=' + escape(that.tags) + '&page=' + that.page + '&per_page=' + that.settings.photosPerPage + '&safe_search=' + that.settings.safeSearch + '&format=json&nojsoncallback=1',
 				request;
 
@@ -93,9 +108,9 @@ var flickr = {
  			request = new ActiveXObject("Microsoft.XMLHTTP");
  		}
 
-		if (typeof(resultsContainer) != 'undefined' && resultsContainer != null) {
-			resultsContainer.parentNode.removeChild(resultsContainer);
-		}
+ 		that.remove(resultsContainer);
+ 		that.remove(emptyPara);
+
 		searchContainer.classList.add('loading');
 		request.open('GET', url, true);
 		request.send();
@@ -250,9 +265,8 @@ var flickr = {
 					l = selectedImages.length,
 					i;
 
-			if (typeof(hiddenImageContainer) != 'undefined' && hiddenImageContainer != null) {
-				hiddenImageContainer.parentNode.removeChild(hiddenImageContainer);
-			}
+			flickr.remove(hiddenImageContainer);
+
 			var hic = document.createElement('div');
 			hic.id = 'hidden-image-container';
 
