@@ -43,7 +43,7 @@ var flickr = {
 	randomPlaceholderText: function() {
 		var input = document.getElementById('flickr-input'),
 				terms = ['Butterflies', 'Rainbows', 'Apples', 'Bicycles', 'Cats', 'Tomatoes', 'Computers', 'Star Wars', 'Cinema', 'Ice Cream'],
-				randomNumber = Math.floor(Math.random() * terms.length + 1);
+				randomNumber = Math.floor(Math.random() * terms.length);
 		input.setAttribute('placeholder', terms[randomNumber]);
 	},
 
@@ -100,13 +100,7 @@ var flickr = {
 				resultsContainer =  document.getElementById('results-container'),
 				emptyPara = document.getElementById('empty-search'),
 				url = that.settings.url + 'api_key=' + that.settings.key + '&method=flickr.photos.search&tags=' + escape(that.tags) + '&page=' + that.page + '&per_page=' + that.settings.photosPerPage + '&safe_search=' + that.settings.safeSearch + '&format=json&nojsoncallback=1',
-				request;
-
-	 	if (window.XMLHttpRequest) {
- 			request = new XMLHttpRequest();
- 		} else if (window.ActiveXObject) {
- 			request = new ActiveXObject("Microsoft.XMLHTTP");
- 		}
+				request = new XMLHttpRequest();
 
  		that.remove(resultsContainer);
  		that.remove(emptyPara);
@@ -141,8 +135,8 @@ var flickr = {
 			      				instructions = document.createElement('p'),
 			      				numResults,
 			      				buttons,
-			      				totalResponse = +response.photos.total,
-			      				i;
+			      				i,
+			      				l;
 
 			      		// move the search box out of the way
 	      				searchContainer.style.paddingTop = 0;
@@ -150,9 +144,8 @@ var flickr = {
 	      				// When the container has moved (The CSS transition is set for 500ms)
 	      				window.setTimeout(function () {
 				      		imageList.classList.add('flickr-image-list');
-				      		numResults = (that.settings.photosPerPage < totalResponse) ? that.settings.photosPerPage : totalResponse;
 
-				      		for (i = 0; i < numResults; i++) {
+				      		for (i = 0, l = response.photos.photo.length; i < l; i++) {
 				      			var currentImg = response.photos.photo[i],
 				      					li = document.createElement('li'),
 				      					link = document.createElement('a'),
@@ -179,10 +172,9 @@ var flickr = {
 
 									var items = document.getElementsByClassName('flickr-image-list')[0].children,
 											galleryLink = document.getElementById('create-gallery-button'),
-											paginate = document.getElementById('paginate'),
-											l = items.length;
+											paginate = document.getElementById('paginate');
 
-									for (i = 0; i < l; i++) {
+									for (i = 0, l = items.length; i < l; i++) {
 										items[i].addEventListener('click', that.selectImages);
 									}
 									galleryLink.addEventListener('click', that.getGalleryImages);
