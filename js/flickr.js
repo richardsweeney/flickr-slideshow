@@ -6,56 +6,65 @@ var flickr = {
 		secret: 'fdd9e176c2d2e4bb',
 		photosPerPage: 32,
 		url: 'http://api.flickr.com/services/rest/?',
-		timeout: 3000
+		safeSearch: 1, // 1 = safe, 2 = moderate, 3 = restricted: dependant on user tagging images!
+		timeout: 4000 // speed of the slideshow
 	},
-	results: {},
-	galleryImages: [],
-	currentImageIndex: 0,
+	page: 1, // current page for search query
+	tags: '', // current search terms
+	results: {}, // container for JSON results
+	galleryImages: [], // array to house gallery image ids
+	currentImageIndex: 0, // Incremental image id (for the slideshow)
 
 	/**
 	 * Attach eventlistener to submit button when the DOM is ready
 	 */
 	load: function() {
 		var submit = document.getElementById('flickr-submit');
-		submit.addEventListener('click', flickr.sortSearch);
+		submit.addEventListener('click', function(e){
+			flickr.sortSearch();
+			e.preventDefault();
+		});
 		flickr.centerContent();
 	},
 
+	/**
+   * Center the opening screen, hide + show search div
+   */
 	centerContent: function() {
 		var that = this,
 				winHeight = window.innerHeight,
 				container = document.getElementsByClassName('search-container')[0],
 				top = (winHeight / 2) - (container.offsetHeight / 2);
 		container.style.paddingTop = top - 100;
-		window.setTimeout(function () { container.classList.add('visible-search') }, 100);
+		window.setTimeout(function () {
+			container.classList.add('visible-search');
+			document.getElementById('flickr-input').focus();
+		}, 100);
 	},
 
 	/**
 	 * Get values from input + perform search query if not empty
 	 */
-	sortSearch: function(e) {
-		var input = document.getElementById('flickr-input'),
-				tags = input.value;
-		if(tags === '') {
+	sortSearch: function() {
+		var input = document.getElementById('flickr-input');
+		flickr.tags = input.value;
+		if(flickr.tags === '') {
 			alert('Please add a search term!');
 			input.focus();
 		} else {
-			flickr.getResults(tags);
+			flickr.getResults();
 		}
-		e.preventDefault();
 	},
 
 	/**
 	 * Get results from flickr API via AJAX
-	 *
-	 * @param string a list of search terms
 	 * Prints a list of returned results to the DOM
 	 */
-	getResults: function(tags) {
+	getResults: function() {
 		var that = this,
 				searchContainer = document.getElementsByClassName('search-container')[0],
 				resultsContainer =  document.getElementById('results-container'),
-				url = that.settings.url + 'api_key=' + that.settings.key + '&method=flickr.photos.search&tags=' + escape(tags) + '&per_page=' + that.settings.photosPerPage + '&format=json&nojsoncallback=1',
+				url = that.settings.url + 'api_key=' + that.settings.key + '&method=flickr.photos.search&tags=' + escape(that.tags) + '&page=' + that.page + '&per_page=' + that.settings.photosPerPage + '&safe_search=' + that.settings.safeSearch + '&format=json&nojsoncallback=1',
 				request = new XMLHttpRequest();
 
 		if (typeof(resultsContainer) != 'undefined' && resultsContainer != null) {
@@ -64,9 +73,8 @@ var flickr = {
 		searchContainer.classList.add('loading');
 		request.open('GET', url, true);
 		request.send();
-		request.onreadystatechange = logResults;
+		request.onreadystatechange = function() {
 
-		function logResults () {
 			searchContainer.classList.remove('loading');
 			try {
 	    	if (request.readyState === 4) {
@@ -87,7 +95,9 @@ var flickr = {
 	      			} else {
 
 			      		var	imageList = document.createElement('ul'),
-			      				createGalleryLink = '<a href="#" id="create-gallery-button" class="inactive">Create Gallery</a>',
+			      				createGalleryLink = '<a href="#" id="create-gallery-button" class="button inactive">Show Gallery</a>',
+			      				paginationLink = '<a href="#" id="paginate" class="button">Show more results</a>',
+			      				buttons = createGalleryLink + '<span class="or">or</span>' + paginationLink,
 			      				instructions = document.createElement('p'),
 			      				numResults,
 			      				totalResponse = +response.photos.total,
@@ -96,11 +106,10 @@ var flickr = {
 			      		// move the search box out of the way
 	      				searchContainer.style.paddingTop = 0;
 
-	      				// When the container has moved
+	      				// When the container has moved (The CSS transition is set for 500ms)
 	      				window.setTimeout(function () {
-
 				      		imageList.classList.add('flickr-image-list');
-				      		numResults = ( that.settings.photosPerPage < totalResponse ) ? that.settings.photosPerPage : totalResponse;
+				      		numResults = (that.settings.photosPerPage < totalResponse) ? that.settings.photosPerPage : totalResponse;
 
 				      		for (i = 0; i < numResults; i++) {
 				      			var currentImg = response.photos.photo[i],
@@ -115,24 +124,24 @@ var flickr = {
 				      		}
 
 				      	 	instructions.classList.add('instructions');
-				      	 	instructions.innerHTML = 'Select some images and click the <strong>Create Gallery</strong> button to create your very own slideshow';
+				      	 	instructions.innerHTML = 'Select some images and click the <strong>Show Gallery</strong> button to create a slideshow gallery.';
 				      	 	resultsContainer.appendChild(instructions);
-				      		resultsContainer.appendChild(imageList).insertAdjacentHTML('afterend', createGalleryLink);
+				      		resultsContainer.appendChild(imageList).insertAdjacentHTML('afterend', buttons);
 				      		searchContainer.appendChild(resultsContainer);
 
 									var items = document.getElementsByClassName('flickr-image-list')[0].children,
 											galleryLink = document.getElementById('create-gallery-button'),
+											paginate = document.getElementById('paginate'),
 											l = items.length;
 
 									for (i = 0; i < l; i++) {
 										items[i].addEventListener('click', that.selectImages);
 									}
 									galleryLink.addEventListener('click', that.getGalleryImages);
-
+									paginate.addEventListener('click', that.paginate);
+									// Timer
 								}, 500);
-
 							}
-
 						} else {
 							resultsContainer.innerHTML = '<p class="no-results">Sorry, there was a problem with the Flickr API!</p>';
 						}
@@ -142,25 +151,34 @@ var flickr = {
 	    	}
 	  	}
 	  	catch( e ) {
-		    // console.log('Caught Exception: ' + e);
-		    // resultsContainer.innerHTML = '<p class="no-results">Sorry, we\'re experiencing technical difficulties, please try again!</p>';
+		    console.log('Caught Exception: ' + e);
+		    resultsContainer.innerHTML = '<p class="no-results">Sorry, we\'re experiencing technical difficulties, please try again!</p>';
 		  }
   	};
 	},
 
 	/**
-	 * Create an image element from returned Flickr JSON
+	 * View the next set of results
+	 */
+	paginate: function(e) {
+		flickr.page++;
+		flickr.sortSearch();
+		e.preventDefault();
+	},
+
+	/**
+	 * Create an image element from the Flickr JSON object
 	 *
 	 * @param object the current image object in the array
 	 * @param string the size of the image to use. See - http://www.flickr.com/services/api/misc.urls.html
 	 * @param string the class to add to the image
 	 * @param string optional id for the image
 	 *
-	 * @return an image element
+	 * @return image element
 	 */
 	createImage: function(img, size, imgClass, i) {
 		var image = new Image();
-		if( i !== false ) {
+		if (i !== false) {
 			image.id = 'id-' + i;
 		}
 		image.src = 'http://farm' + img.farm + '.staticflickr.com/' + img.server + '/' + img.id + '_' + img.secret + '_' + size + '.jpg';
@@ -171,7 +189,7 @@ var flickr = {
 	},
 
 	/**
-	 * Toggle a 'selected' state for images + for 'create slideshow' button
+	 * Toggle a 'selected' state for images & for 'create slideshow' button
 	 */
 	selectImages: function(e) {
 		var selectedImages = document.getElementsByClassName('selected-image'),
@@ -193,13 +211,8 @@ var flickr = {
 		// on this link will have been removed
 		if(this.classList.contains('inactive') === false) {
 			var selectedImages = document.getElementsByClassName('selected-image'),
-					searchContainer = document.getElementsByClassName('search-container')[0],
-					previousImages = document.getElementsByClassName('hidden'),
 					hiddenImageContainer = document.getElementById('hidden-image-container'),
-					selectedImageArray = [],
 					l = selectedImages.length,
-					pl = previousImages.length,
-					images = '',
 					i;
 
 			if (typeof(hiddenImageContainer) != 'undefined' && hiddenImageContainer != null) {
@@ -223,8 +236,7 @@ var flickr = {
 				flickr.galleryImages.push(id);
 			}
 			document.body.appendChild(hic);
-			flickr.initialiseSlideShow();
-
+			flickr.initializeSlideShow();
 		}
 		e.preventDefault();
 	},
@@ -233,7 +245,7 @@ var flickr = {
 	/**
 	 * Initialize the slideshow & add click handler to exit the show
 	 */
-	initialiseSlideShow: function() {
+	initializeSlideShow: function() {
 		var that = this,
 				container = document.createElement('div'),
 				content = document.createElement('div');
@@ -246,18 +258,20 @@ var flickr = {
 		container.classList.add('loading');
 		container.appendChild(content);
 		document.body.appendChild(container);
-
 		container.addEventListener('click', that.stopSlideShow);
 
 		var firstId = 'id-' + flickr.galleryImages[0];
 		firstImg = document.getElementById(firstId);
-
 		// When the first image has loaded, initialize the show!
 		firstImg.onload = function() {
 			container.classList.remove('loading');
 			that.slideShow();
 		};
-
+		window.document.onkeydown = function (e) {
+		  if (e.keyCode == 27) {
+		    that.stopSlideShow();
+		  }
+		}
 	},
 
 	/**
@@ -270,7 +284,7 @@ var flickr = {
 				content = document.getElementById('slideshow-content'),
 				winWidth = window.innerWidth,
 				winHeight = window.innerHeight,
-				currImg = (that.galleryImages.length === that.currentImageIndex + 1) ? 0 : that.currentImageIndex + 1,
+				currImg = (that.galleryImages.length === that.currentImageIndex) ? 0 : that.currentImageIndex,
 				imgId = that.galleryImages[currImg],
 				id = 'id-' + imgId,
 				origImg = document.getElementById(id),
@@ -287,7 +301,7 @@ var flickr = {
 			return;
 		}
 
-		that.currentImageIndex = currImg;
+		that.currentImageIndex = currImg + 1;
 
 		if (container.hasChildNodes()) {
 			while (container.hasChildNodes()) {
@@ -357,4 +371,4 @@ var flickr = {
 
 };
 
-document.addEventListener("DOMContentLoaded", flickr.load, false);
+document.addEventListener("DOMContentLoaded", flickr.load);
