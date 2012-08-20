@@ -107,7 +107,6 @@ var flickr = {
 	      	if (request.status === 200) {
 
 	      		var response = that.results = JSON.parse(request.responseText);
-	      		console.log(response);
 
 	      		if (response.stat === 'ok') {
 
@@ -160,7 +159,6 @@ var flickr = {
 				      	 		buttons = createGalleryLink;
 				      	 	}
 
-				      	 	console.log(that.page, response.photos.pages);
 				      		resultsContainer.appendChild(imageList).insertAdjacentHTML('afterend', buttons);
 				      		searchContainer.appendChild(resultsContainer);
 
