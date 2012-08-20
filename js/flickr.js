@@ -1,9 +1,17 @@
+/**
+ *
+ * flickr.js
+ *
+ * Search for images in Flickr, select images and create
+ * a lightbox style slideshow with selected images.
+ *
+ * Richard Sweeney : http://richardsweeney.com : @richardsweeney
+ * Public Domain.
+ */
+
 var flickr = {
 	settings: {
-		username: 'mob_dev',
-		password: 'asdfasdf',
 		key: 'b54580f369a7eeebecb2004dc429d08f',
-		secret: 'fdd9e176c2d2e4bb',
 		photosPerPage: 32,
 		url: 'http://api.flickr.com/services/rest/?',
 		safeSearch: 1, // 1 = safe, 2 = moderate, 3 = restricted: dependant on user tagging images!
@@ -20,11 +28,23 @@ var flickr = {
 	 */
 	load: function() {
 		var submit = document.getElementById('flickr-submit');
-		submit.addEventListener('click', function(e){
+		submit.addEventListener('click', function (e) {
+			flickr.page = 1;
 			flickr.sortSearch();
 			e.preventDefault();
 		});
 		flickr.centerContent();
+		flickr.randomPlaceholderText();
+	},
+
+	/**
+	 * Shows a random placeholder text
+	 */
+	randomPlaceholderText: function() {
+		var input = document.getElementById('flickr-input'),
+				terms = ['Butterflies', 'Rainbows', 'Apples', 'Bicycles', 'Cats', 'Tomatoes', 'Computers', 'Star Wars', 'Cinema', 'Ice Cream'],
+				randomNumber = Math.floor(Math.random() * terms.length + 1);
+		input.setAttribute('placeholder', terms[randomNumber]);
 	},
 
 	/**
@@ -65,7 +85,13 @@ var flickr = {
 				searchContainer = document.getElementsByClassName('search-container')[0],
 				resultsContainer =  document.getElementById('results-container'),
 				url = that.settings.url + 'api_key=' + that.settings.key + '&method=flickr.photos.search&tags=' + escape(that.tags) + '&page=' + that.page + '&per_page=' + that.settings.photosPerPage + '&safe_search=' + that.settings.safeSearch + '&format=json&nojsoncallback=1',
-				request = new XMLHttpRequest();
+				request;
+
+	 	if (window.XMLHttpRequest) {
+ 			request = new XMLHttpRequest();
+ 		} else if (window.ActiveXObject) {
+ 			request = new ActiveXObject("Microsoft.XMLHTTP");
+ 		}
 
 		if (typeof(resultsContainer) != 'undefined' && resultsContainer != null) {
 			resultsContainer.parentNode.removeChild(resultsContainer);
@@ -73,7 +99,7 @@ var flickr = {
 		searchContainer.classList.add('loading');
 		request.open('GET', url, true);
 		request.send();
-		request.onreadystatechange = function() {
+		request.onreadystatechange = function () {
 
 			searchContainer.classList.remove('loading');
 			try {
@@ -81,6 +107,7 @@ var flickr = {
 	      	if (request.status === 200) {
 
 	      		var response = that.results = JSON.parse(request.responseText);
+	      		console.log(response);
 
 	      		if (response.stat === 'ok') {
 
@@ -97,9 +124,9 @@ var flickr = {
 			      		var	imageList = document.createElement('ul'),
 			      				createGalleryLink = '<a href="#" id="create-gallery-button" class="button inactive">Show Gallery</a>',
 			      				paginationLink = '<a href="#" id="paginate" class="button">Show more results</a>',
-			      				buttons = createGalleryLink + '<span class="or">or</span>' + paginationLink,
 			      				instructions = document.createElement('p'),
 			      				numResults,
+			      				buttons,
 			      				totalResponse = +response.photos.total,
 			      				i;
 
@@ -126,6 +153,14 @@ var flickr = {
 				      	 	instructions.classList.add('instructions');
 				      	 	instructions.innerHTML = 'Select some images and click the <strong>Show Gallery</strong> button to create a slideshow gallery.';
 				      	 	resultsContainer.appendChild(instructions);
+
+				      	 	if (response.photos.pages > that.page) {
+				      	 		buttons = createGalleryLink + '<span class="or">or</span>' + paginationLink;
+				      	 	} else {
+				      	 		buttons = createGalleryLink;
+				      	 	}
+
+				      	 	console.log(that.page, response.photos.pages);
 				      		resultsContainer.appendChild(imageList).insertAdjacentHTML('afterend', buttons);
 				      		searchContainer.appendChild(resultsContainer);
 
@@ -138,7 +173,9 @@ var flickr = {
 										items[i].addEventListener('click', that.selectImages);
 									}
 									galleryLink.addEventListener('click', that.getGalleryImages);
-									paginate.addEventListener('click', that.paginate);
+									if (response.photos.pages > that.page) {
+										paginate.addEventListener('click', that.paginate);
+									}
 									// Timer
 								}, 500);
 							}
@@ -150,7 +187,7 @@ var flickr = {
 	      	}
 	    	}
 	  	}
-	  	catch( e ) {
+	  	catch(e) {
 		    console.log('Caught Exception: ' + e);
 		    resultsContainer.innerHTML = '<p class="no-results">Sorry, we\'re experiencing technical difficulties, please try again!</p>';
 		  }
@@ -177,7 +214,7 @@ var flickr = {
 	 * @return image element
 	 */
 	createImage: function(img, size, imgClass, i) {
-		var image = new Image();
+		var image = document.createElement('img');
 		if (i !== false) {
 			image.id = 'id-' + i;
 		}
@@ -263,7 +300,7 @@ var flickr = {
 		var firstId = 'id-' + flickr.galleryImages[0];
 		firstImg = document.getElementById(firstId);
 		// When the first image has loaded, initialize the show!
-		firstImg.onload = function() {
+		firstImg.onload = function () {
 			container.classList.remove('loading');
 			that.slideShow();
 		};
@@ -334,7 +371,7 @@ var flickr = {
 		content.style.left = leftPos;
 		content.style.top = topPos;
 
-		window.setTimeout( function() { content.classList.add('faded') }, 50);
+		window.setTimeout( function () { content.classList.add('faded') }, 50);
 
 		if (that.galleryImages.length > 1) {
 			setTimeout(function () {
